@@ -109,13 +109,13 @@ jobs:
         cd openwrt
         make defconfig
         make download -j8
-        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec ls -hl {} \;
         find dl -size -1024c -exec rm -f {} \;
 
     - name: 上传DL文件夹
       if: env.ONLY_DOWNLOAD == 'true'
       run: |
-        find openwrt/dl -size +100M -exec ls -l {} \;
+        find openwrt/dl -size +100M -exec ls -hl {} \;
         find openwrt/dl -size +100M -exec rm -f {} \;
         mv openwrt/dl ./
         git add dl
