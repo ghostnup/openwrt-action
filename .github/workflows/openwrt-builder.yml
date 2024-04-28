@@ -115,6 +115,8 @@ jobs:
     - name: 上传DL文件夹
       if: env.ONLY_DOWNLOAD == 'true'
       run: |
+        find openwrt/dl -size +100M -exec ls -l {} \;
+        find openwrt/dl -size +100M -exec rm -f {} \;
         mv openwrt/dl ./
         git add dl
         git commit -m "Upload $(date +%Y-%m-%d" "%H:%M:%S)"
