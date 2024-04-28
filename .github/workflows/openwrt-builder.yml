@@ -120,8 +120,8 @@ jobs:
     - name: 上传DL文件夹
       if: env.ONLY_DOWNLOAD == 'true'
       run: |
-        cd openwet/dl
-        git add .
+        cd openwet
+        git add dl/
         git commit -m "Upload $(date +%Y-%m-%d" "%H:%M:%S)"
         git push -f
 
