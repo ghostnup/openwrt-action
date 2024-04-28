@@ -113,9 +113,17 @@ jobs:
       run: |
         cd openwrt
         make defconfig
-        make download -j8
+        make download -j12
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+
+    - name: 上传DL文件夹
+      if: env.ONLY_DOWNLOAD == 'true'
+      run: |
+        cd openwet/dl
+        git add .
+        git commit -m "Upload $(date +%Y-%m-%d" "%H:%M:%S)"
+        git push -f
 
     - name: 编译
       id: compile
