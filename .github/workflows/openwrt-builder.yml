@@ -103,11 +103,9 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
-    - name: 软链接下载目录
+    - name: 复制下载目录
       run: |
-        [ ! -d dl ] && mkdir -p dl
-        cd openwrt
-        ln -sf ../dl
+        [ ! -d dl ] && cp -rf dl openwrt/
 
     - name: 下载软件包
       id: package
@@ -132,9 +130,10 @@ jobs:
     - name: 上传DL文件夹
       if: env.UPLOAD_DOWNLOAD == 'true'
       run: |
+        cd openwrt
         find dl -size +100M -exec ls -hl {} \;
         find dl -size +100M -exec rm -f {} \;
-        git add dl
+        git add -f dl
         git commit -m "Upload $(date +%Y-%m-%d" "%H:%M:%S)"
         git push -f
 
