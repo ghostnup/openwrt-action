@@ -130,10 +130,11 @@ jobs:
     - name: 上传DL文件夹
       if: env.UPLOAD_DOWNLOAD == 'true'
       run: |
-        cd openwrt
-        find dl -size +100M -exec ls -hl {} \;
-        find dl -size +100M -exec rm -f {} \;
-        git add -f dl
+        find openwrt/dl -size +100M -exec ls -hl {} \;
+        find openwrt/dl -size +100M -exec rm -f {} \;
+        [ ! -d dl ] && mkdir -p dl
+        rsync --delete-before -arhP --stats /openwrt/dl/ ./dl/
+        git add dl
         git commit -m "Upload $(date +%Y-%m-%d" "%H:%M:%S)"
         git push -f
 
