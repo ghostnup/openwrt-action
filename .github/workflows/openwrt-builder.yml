@@ -45,7 +45,6 @@ jobs:
 
     - name: 检查服务器配置
       run: |
-        exit 0
         echo "已知CPU型号（降序）：7763,8370C,8272CL,8171M,E5系列"
         echo "--------------------------CPU信息--------------------------"
         echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
@@ -106,8 +105,7 @@ jobs:
 
     - name: 复制下载目录
       run: |
-        [ -d dl ] || exit 0
-        rsync --delete-before -arhP --stats ./dl/ /openwrt/dl/
+        [ -d dl ] && rsync --delete-before -arhP --stats ./dl/ /openwrt/dl/
 
     - name: 下载软件包
       id: package
