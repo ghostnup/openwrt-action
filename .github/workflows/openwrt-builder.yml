@@ -105,7 +105,9 @@ jobs:
 
     - name: 复制下载目录
       run: |
-        [ -d dl ] && rsync --delete-before -arhP --stats ./dl /openwrt/
+        [ -d dl ] || exit 0
+        mkdir -p /openwrt/dl
+        rsync --delete-before -arhP --stats ./dl/ /openwrt/dl
 
     - name: 下载软件包
       id: package
