@@ -191,7 +191,7 @@ jobs:
 
     - name: 删除旧发行
       uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled() && env.ONLY_DOWNLOAD != 'true'
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
         keep_latest: 3
         delete_tags: true
