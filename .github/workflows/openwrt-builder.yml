@@ -105,9 +105,7 @@ jobs:
 
     - name: 复制下载目录
       run: |
-        [ -d dl ] || exit 0
-        mkdir -p /openwrt/dl
-        rsync --delete-before -arhP --stats ./dl/ /openwrt/dl
+        [ -d dl ] && rsync --delete-before -arhP --stats ./dl/ ./openwrt/dl/
 
     - name: 下载软件包
       id: package
@@ -135,7 +133,7 @@ jobs:
         find openwrt/dl -size +100M -exec ls -hl {} \;
         find openwrt/dl -size +100M -exec rm -f {} \;
         [ ! -d dl ] && mkdir -p dl
-        rsync --delete-before -arhPq --stats /openwrt/dl/ ./dl/
+        rsync --delete-before -arhPq --stats ./openwrt/dl/ ./dl/
         git add dl
         git commit -m "Upload $(date +%Y-%m-%d" "%H:%M:%S)"
         git push -f
